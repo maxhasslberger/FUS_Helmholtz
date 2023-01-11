@@ -1,11 +1,11 @@
 dq = daq("ni");
 dq.Rate = 1000;
-addinput(dq, "Dev1", "ai0", "Voltage");
+% addinput(dq, "Dev1", "ai0", "Voltage");
 % addinput(dq, "Dev1", "ai1", "Voltage");
 % addinput(dq, "Dev1", "ai2", "Voltage");
 % addinput(dq, "Dev1", "ai3", "Voltage");
 addinput(dq, "Dev1", "ai4", "Voltage");
-% addinput(dq, "Dev1", "ai5", "Voltage");
+addinput(dq, "Dev1", "ai5", "Voltage");
 % addinput(dq, "Dev1", "ai6", "Voltage");
 % addinput(dq, "Dev1", "ai7", "Voltage");
 

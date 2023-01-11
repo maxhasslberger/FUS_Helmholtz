@@ -2,6 +2,7 @@
 dim = 2;
 files = dir('*.mat');
 data = [];
+pressure = [];
 pos = [];
 % pos = zeros(length(files), dim);
 
@@ -15,9 +16,10 @@ for i=1:length(files)
     pos_ind(new_inds + 1) = 0;
     
     pos(pos_ind(1) + 1, pos_ind(2) + 1, :) = tmp.position;
-    data(pos_ind(1) + 1, pos_ind(2) + 1, :) = tmp.data(:, 2);
+    data(pos_ind(1) + 1, pos_ind(2) + 1, :) = tmp.data;
+    pressure(pos_ind(1) + 1, pos_ind(2) + 1, :) = tmp.pressure;
 end
-time = tmp.data(:, 1);
+time = tmp.time;
 
 %% Process and Plot
 peaks = max(abs(data), [], 3);
