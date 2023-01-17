@@ -1,5 +1,5 @@
 dq = daq("ni");
-dq.Rate = 1000;
+dq.Rate = 8000;
 % addinput(dq, "Dev1", "ai0", "Voltage");
 % addinput(dq, "Dev1", "ai1", "Voltage");
 % addinput(dq, "Dev1", "ai2", "Voltage");
