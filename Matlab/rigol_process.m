@@ -1,7 +1,7 @@
 %% Input param
 path = 'Data/Dummy/';
 channel = 1; % Rigol channel
-dx = 1.0 * 1e-3; % mm
+dx = 1.0 * 1e-3; % m
 offset = [30.0, 10.0]; % mm
 center_frq = 2.0; % MHz -> Transducer frq
 amp_flag = 0; % amplifier used between hydrophone - DAQ?
