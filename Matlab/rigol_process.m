@@ -1,7 +1,8 @@
 %% Input param
 path = 'Data/Dummy/';
-channel = 2; % Rigol channel
+channel = 1; % Rigol channel
 dx = 1.0 * 1e-3; % mm
+offset = [30.0, 10.0]; % mm
 center_frq = 2.0; % MHz -> Transducer frq
 amp_flag = 0; % amplifier used between hydrophone - DAQ?
 
@@ -39,16 +40,18 @@ end
 
 %% Process
 lut_idx = find(lut(1, :) == center_frq);
-pressure = data(:, :, :, channel+1) * lut(2, lut_idx)^amp_flag / lut(3, lut_idx); % Ch2 signal converted to Pa
+pressure = data(:, :, :, channel+1) * lut(2, lut_idx)^amp_flag / lut(3, lut_idx); % Ch1 signal converted to Pa
 
-signal = rms(data(:, :, :, channel+1), 3);
-pressure_signal = rms(pressure, 3);
+% signal = rms(data(:, :, :, channel+1), 3);
+% pressure_signal = rms(pressure, 3);
+signal = (max(data(:, :, :, channel+1), [], 3) - min(data(:, :, :, channel+1), [], 3)) / 2;
+pressure_signal = (max(abs(pressure), [], 3) - min(abs(pressure), [], 3)) / 2;
 
 %% Plot
 % surf(pos(:, :, 1) * dx, pos(:, :, 2) * dx, pressure_signal, 'edgecolor', 'none');
 % view(2);
 % contourf(unique(pos(:, 1)), unique(pos(:, 2)), peaks);
-pcolor(pos(:, :, 1) * dx * 1e3, pos(:, :, 2) * dx * 1e3, pressure_signal);
+pcolor(pos(:, :, 1) * dx * 1e3 - offset(1), pos(:, :, 2) * dx * 1e3 - offset(2), pressure_signal);
 xlabel('x (mm)');
 ylabel('y (mm)');
 a = colorbar;

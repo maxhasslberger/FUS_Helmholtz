@@ -1,0 +1,11 @@
+﻿Data
+Headers;Channel 0 (Dev2/0) Peak-to-peak;Channel 0 (Dev2/0) Frequency
+Channel;Channel 0;Channel 0
+Measurement;Peak-to-peak;Frequency
+Value;0,123587207053788;2000222,24691632
+Mean;0,0606586527365473;5479298,24006262
+Minimum;0,00164782942738384;0
+Maximum;0,201035190140828;50000000
+Statistical range;0,199387360713445;50000000
+Standard deviation;0,0353928728051624;10380155,2156789
+Count;996;996
