@@ -1,0 +1,11 @@
+﻿Data
+Headers,Channel 0 (Dev1/0) Amplitude,Channel 0 (Dev1/0) Frequency
+Channel,Channel 0,Channel 0
+Measurement,Amplitude,Frequency
+Value,0.0329050938780711,2006688.9632107
+Mean,0.0775245405409276,3999188.84573604
+Minimum,0.00164139259368312,0
+Maximum,0.145008989609778,50000000
+Statistical range,0.143367597016095,50000000
+Standard deviation,0.0489306292454406,7708280.66920419
+Count,6253,6253
