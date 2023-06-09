@@ -1,9 +1,8 @@
 %% Input param
-clear;
-path = 'Data/Instrument_Studio/2MHz_longitudinal/';
+path = 'Data/Instrument_Studio/2MHz_char/';
 channel = 1; % oscilloscope channel
-dx = 2.0 * 1e-3; % m
-offset = [0.0 * 1e-3, 11.0 * 1e-3]; % m
+dx = 1.0 * 1e-3; % m
+offset = [7.0 * 1e-3, 7.0 * 1e-3]; % m
 center_frq = 2.0; % MHz -> Transducer frq
 amp_flag = 0; % amplifier used between hydrophone - DAQ?
 
@@ -34,9 +33,8 @@ for hor = 1:length(folders)
 %         % Std encoding
 %         data = importdata(strcat(ext_path, files(vert).name));
         % Instrument studio encoding
-%         [~,~,data] = xlsread(strcat(ext_path, files(vert).name));
-%         data = [data{7:end, 1}];
-        data = readmatrix(strcat(ext_path, files(vert).name));
+        [~,~,data] = xlsread(strcat(ext_path, files(vert).name));
+        data = [data{7:end, 1}];
         
         % Determine amplitude and store
         max_avg = +mean(maxk(findpeaks(+data), avg_elements));
@@ -62,12 +60,10 @@ pressure = signal * lut(2, lut_idx)^amp_flag / lut(3, lut_idx); % Voltage signal
 % surf(pos(:, :, 1) * dx, pos(:, :, 2) * dx, pressure_signal, 'edgecolor', 'none');
 % view(2);
 % contourf(unique(pos(:, 1)), unique(pos(:, 2)), peaks);
-pressure = flip(pressure, 1);
 pcolor(((0:size(pressure, 2)-1) * dx - offset(2)) * 1e3, ((0:size(pressure, 1)-1) * dx - offset(1)) * 1e3, pressure / 1e6);
 xlabel('x (mm)');
-ylabel('z (mm)');
+ylabel('y (mm)');
 a = colorbar;
-title('SU-126 (2 MHz) - coupling cone');
 ylabel(a,'Pressure (MPa)','FontSize',16,'Rotation',90);
 
 
