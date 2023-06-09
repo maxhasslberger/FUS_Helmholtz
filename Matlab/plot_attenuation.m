@@ -2,8 +2,8 @@
 clear;
 path = 'Data/Instrument_Studio/2MHz_longitudinal/';
 channel = 1; % oscilloscope channel
-dx = 2.0 * 1e-3; % m
-offset = [0.0 * 1e-3, 11.0 * 1e-3]; % m
+dx = 5.0 * 1e-3; % m
+offset = [0.0 * 1e-3, 0.0 * 1e-3]; % m
 center_frq = 2.0; % MHz -> Transducer frq
 amp_flag = 0; % amplifier used between hydrophone - DAQ?
 
@@ -20,8 +20,8 @@ signal = NaN(length(folders));
 
 avg_elements = 10;
 
-for hor = 1:length(folders)
-    ext_path = strcat(path, folders(hor).name, '/');
+for cond = 1:length(folders)
+    ext_path = strcat(path, folders(cond).name, '/');
     disp(strcat('Processing: ', ext_path))
     files = dir(strcat(ext_path, '*.csv'));
     
@@ -43,7 +43,7 @@ for hor = 1:length(folders)
         min_avg = -mean(maxk(findpeaks(-data), avg_elements));
         datapoint = (max_avg - min_avg) / 2;
         
-        signal(vert_idx, hor) = datapoint;
+        signal(vert_idx, cond) = datapoint;
         vert_idx = vert_idx + 1;
     end
 end
@@ -59,16 +59,9 @@ lut_idx = find(lut(1, :) == center_frq);
 pressure = signal * lut(2, lut_idx)^amp_flag / lut(3, lut_idx); % Voltage signal converted to Pa
 
 %% Plot
-% surf(pos(:, :, 1) * dx, pos(:, :, 2) * dx, pressure_signal, 'edgecolor', 'none');
-% view(2);
-% contourf(unique(pos(:, 1)), unique(pos(:, 2)), peaks);
-pressure = flip(pressure, 1);
-pcolor(((0:size(pressure, 2)-1) * dx - offset(2)) * 1e3, ((0:size(pressure, 1)-1) * dx - offset(1)) * 1e3, pressure / 1e6);
-xlabel('x (mm)');
-ylabel('z (mm)');
-a = colorbar;
+xlabel('z (mm)');
+ylabel('Pressure (MPa)');
 title('SU-126 (2 MHz) - coupling cone');
-ylabel(a,'Pressure (MPa)','FontSize',16,'Rotation',90);
 
 
 
