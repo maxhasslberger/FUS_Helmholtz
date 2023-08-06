@@ -1,3 +1,10 @@
+% To use this function, Data must be captured in separate folders
+% (= indiv. row indices). Each folder contains one 'Waveform Data' csv file
+% for each column index. It is important that each folder contains the same
+% amount of 'Waveform Data' files (=> rows x cols image). If the data is
+% enco
+% encoding format of the NI-USB oscilloscope 
+
 %% Input param
 path = 'Data/Instrument_Studio/2MHz_longitudinal/';
 channel = 1; % oscilloscope channel
