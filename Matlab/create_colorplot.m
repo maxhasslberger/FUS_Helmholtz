@@ -1,5 +1,5 @@
 %% Input param
-path = 'Data/Instrument_Studio/2MHz_char/';
+path = 'Data/Instrument_Studio/2MHz_longitudinal/';
 channel = 1; % oscilloscope channel
 dx = 1.0 * 1e-3; % m
 offset = [7.0 * 1e-3, 7.0 * 1e-3]; % m
@@ -7,9 +7,9 @@ center_frq = 2.0; % MHz -> Transducer frq
 amp_flag = 0; % amplifier used between hydrophone - DAQ?
 
 % LUT for hydrophone and amplifiers
-lut = [0.5, 2.0, 15.0; ... % MHz
-    530.9, 530.9, 530.9; ... % NP-2519 amplifier -> ~54.5 dB (small signal)-> ~ 60 dB for very small signals!
-    188.4 * 1e-9, 158.5 * 1e-9, 105.9 * 1e-9]; % Onda HNR-0500 hydrophone (V/Pa) -> [~-254.5, ~-256.0, ~-259.5] dB
+lut.F0 = [0.5, 2.0, 15.0]; % MHz
+lut.gain = [530.9, 530.9, 530.9]; % NP-2519 amplifier -> ~54.5 dB (small signal)-> ~ 60 dB for very small signals!
+lut.hyd_TF = [188.4 * 1e-9, 158.5 * 1e-9, 105.9 * 1e-9]; % Onda HNR-0500 hydrophone (V/Pa) -> [~-254.5, ~-256.0, ~-259.5] dB
 
 dim = 2;
 %% Load and merge files
@@ -33,8 +33,7 @@ for hor = 1:length(folders)
 %         % Std encoding
 %         data = importdata(strcat(ext_path, files(vert).name));
         % Instrument studio encoding
-        [~,~,data] = xlsread(strcat(ext_path, files(vert).name));
-        data = [data{7:end, 1}];
+        data = readmatrix(strcat(ext_path, files(vert).name));
         
         % Determine amplitude and store
         max_avg = +mean(maxk(findpeaks(+data), avg_elements));
@@ -53,8 +52,8 @@ signal(:, all(isnan(signal), 1)) = [];
 signal(all(isnan(signal), 2), :) = [];
 
 % Pressure conversion
-lut_idx = find(lut(1, :) == center_frq);
-pressure = signal * lut(2, lut_idx)^amp_flag / lut(3, lut_idx); % Voltage signal converted to Pa
+lut_idx = find(lut.F0 == center_frq);
+pressure = signal * lut.gain(lut_idx)^amp_flag / lut.hyd_TF(lut_idx); % Voltage signal converted to Pa
 
 %% Plot
 % surf(pos(:, :, 1) * dx, pos(:, :, 2) * dx, pressure_signal, 'edgecolor', 'none');
