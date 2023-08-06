@@ -9,7 +9,7 @@ amount of 'Waveform Data' files (=> rows x cols image). Besides, data
 must be captured in the same order across all rows (First measurement
 spatially on the same column for every row measurement (=folder)).
 Distance between subsequent columns and rows (=dx) shall remain 
-unchanged.
+unchanged during measurements.
 
 For create_colorplot.m: If the files are encoded in an old format of the NI-USB oscilloscope, use 
 the create_colorplot_oldFormat.m function instead.
