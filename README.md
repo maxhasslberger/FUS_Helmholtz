@@ -1,4 +1,4 @@
-"# FUS_Helmholtz" 
+# FUS_Helmholtz 
 
 ## create_colorplot.m and plot_attenuation functions
 To use these functions, Data (captured with the NI-USB 5133 oscilloscope) 
