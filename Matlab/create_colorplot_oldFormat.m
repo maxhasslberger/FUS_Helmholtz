@@ -35,6 +35,9 @@ for hor = 1:length(folders)
         % Instrument studio encoding
         [~,~,data] = xlsread(strcat(ext_path, files(vert).name));
         data = [data{7:end, 1}];
+        if size(data, 2) > 1
+            data = data(:, channel);
+        end
         
         % Determine amplitude and store
         max_avg = +mean(maxk(findpeaks(+data), avg_elements));
@@ -60,7 +63,7 @@ pressure = signal * lut.gain(lut_idx)^amp_flag / lut.hyd_TF(lut_idx); % Voltage 
 % surf(pos(:, :, 1) * dx, pos(:, :, 2) * dx, pressure_signal, 'edgecolor', 'none');
 % view(2);
 % contourf(unique(pos(:, 1)), unique(pos(:, 2)), peaks);
-pcolor(((0:size(pressure, 2)-1) * dx - offset(2)) * 1e3, ((0:size(pressure, 1)-1) * dx - offset(1)) * 1e3, pressure / 1e6);
+pcolor(((0:size(pressure, 2)-1) * dx - offset(1)) * 1e3, ((0:size(pressure, 1)-1) * dx - offset(2)) * 1e3, pressure / 1e6);
 xlabel('x (mm)');
 ylabel('y (mm)');
 a = colorbar;

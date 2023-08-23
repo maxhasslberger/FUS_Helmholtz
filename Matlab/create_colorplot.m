@@ -1,8 +1,8 @@
 %% Input param
-path = 'Data/Instrument_Studio/2MHz_longitudinal/';
+path = fullfile('Data/15MHz_unfoc_char/');
 channel = 1; % oscilloscope channel
 dx = 1.0 * 1e-3; % m - dx on resulting color plot
-offset = [7.0 * 1e-3, 7.0 * 1e-3]; % m - for color plot
+offset = [7.0 * 1e-3, 0.0 * 1e-3]; % m - for color plot
 center_frq = 2.0; % MHz -> Transducer frq
 amp_flag = 0; % amplifier used between hydrophone - DAQ?
 
@@ -33,6 +33,9 @@ for hor = 1:length(folders)
 %         data = importdata(strcat(ext_path, files(vert).name));
         % Instrument studio encoding
         data = readmatrix(strcat(ext_path, files(vert).name));
+        if size(data, 2) > 1
+            data = data(:, channel);
+        end
         
         % Determine amplitude and store
         max_avg = +mean(maxk(findpeaks(+data), avg_elements));
@@ -58,7 +61,7 @@ pressure = signal * lut.gain(lut_idx)^amp_flag / lut.hyd_TF(lut_idx); % Voltage 
 % surf(pos(:, :, 1) * dx, pos(:, :, 2) * dx, pressure_signal, 'edgecolor', 'none');
 % view(2);
 % contourf(unique(pos(:, 1)), unique(pos(:, 2)), peaks);
-pcolor(((0:size(pressure, 2)-1) * dx - offset(2)) * 1e3, ((0:size(pressure, 1)-1) * dx - offset(1)) * 1e3, pressure / 1e6);
+pcolor(((0:size(pressure, 2)-1) * dx - offset(1)) * 1e3, ((0:size(pressure, 1)-1) * dx - offset(2)) * 1e3, pressure / 1e6);
 xlabel('x (mm)');
 ylabel('y (mm)');
 a = colorbar;

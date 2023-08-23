@@ -5,7 +5,6 @@ close all;
 path = 'Data/Instrument_Studio/skull_meas/';
 channel = 1; % oscilloscope channel
 dx = 2.0 * 1e-3; % m
-% offset = [0.0 * 1e-3, 0.0 * 1e-3]; % m
 center_frq = 2.0; % MHz -> Transducer frq
 amp_flag = 0; % amplifier used between hydrophone - DAQ?
 
@@ -41,6 +40,9 @@ for dis = 1:length(folders)
 %         [~,~,data] = xlsread(strcat(ext_path, files(vert).name));
 %         data = [data{7:end, 1}];
         data = readmatrix(strcat(ext_path, files(cond).name));
+        if size(data, 2) > 1
+            data = data(:, channel);
+        end
         
         % Determine amplitude and store
         max_avg = +mean(maxk(findpeaks(+data), avg_elements));
